@@ -19,7 +19,7 @@ int *_arr = new int[length];
     }
 
 }
-
+/*
 void push (int v,int t, int *arr) {
 
 
@@ -29,6 +29,7 @@ void push (int v,int t, int *arr) {
 
 
 }
+*/
 int main() {
 
     int length;
@@ -37,7 +38,7 @@ int main() {
     cin >> length;
 
     int *arr = new int [length];
-/*
+
     cout << "Insert values:" << endl;
 for (int i = 0; i < length; i++) {
     int v;
@@ -47,12 +48,12 @@ for (int i = 0; i < length; i++) {
     ptr->Data = v;
     arr[i] = ptr->Data;
 }
-*/
 
+/*
     push(5, 0, arr);
     push(6, 1, arr);
     push(7, 2, arr);
-
+*/
     cout << "Your stack:" << endl;
 for (int j = 0; j < length; j++) {
 
