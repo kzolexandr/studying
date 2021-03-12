@@ -2,12 +2,11 @@
 using namespace std;
 
 void merge(int *arr, int fr, int ls) {
-    int mid, st, fin, j;
     int *temp = new int[ls];
-    mid = (fr + ls) / 2;
-    st = fr;
-    fin = mid + 1;
-    for (j = fr; j <= ls; j++)
+    int mid = (fr + ls) / 2;
+    int st = fr;
+    int fin = mid + 1;
+    for (int j = fr; j <= ls; j++)
     if ((st <= mid) && ((fin > ls) || (arr[st] < arr[fin]))) {
         temp[j] = arr[st];
         st++;
@@ -16,7 +15,7 @@ void merge(int *arr, int fr, int ls) {
         temp[j] = arr[fin];
         fin++;
     }
-    for (j = fr; j <= ls; j++)
+    for (int j = fr; j <= ls; j++)
     arr[j] = temp[j];
 };
 
@@ -29,22 +28,26 @@ void sort(int *arr, int fr, int ls) {
 }
 
 void quick (int *temp, int fr, int ls) {
-    int mid, c;
-    int f=fr, l=ls;
-    mid=temp[(f+l) / 2];
+    int f = fr;
+    int l = ls;
+    int mid = temp[(f + l) / 2];
     do {
-    while (temp[f]<mid) f++;
-    while (temp[l]>mid) l--;
-    if (f<=l) {
-    c=temp[f];
-    temp[f]=temp[l];
-    temp[l]=c;
-    f++;
-    l--;
+    while (temp[f] < mid) {
+        f++; }
+    while (temp[l] > mid) {
+        l--; }
+    if (f <= l) {
+        int c = temp[f];
+        temp[f] = temp[l];
+        temp[l] = c;
+        f++;
+        l--;
     }
-    } while (f<l);
-    if (fr<l) quick(temp, fr, l);
-    if (f<ls) quick(temp, f, ls);
+    } while (f < l);
+    if (fr < l) {
+        quick(temp, fr, l); }
+    if (f < ls) {
+    quick(temp, f, ls); }
     }
 
 int main () {
@@ -59,7 +62,7 @@ int main () {
     cin >> n;
     int *arr = new int[n];
     for (i = 1; i <= n; i++) {
-    cout << i << " element > ";
+    cout << i << " > ";
     cin >> arr[i];
     }
     sort(arr, 1, n);
@@ -73,7 +76,7 @@ int main () {
     cin >> n;
     int *arr = new int[n];
     for (i = 0; i < n; i++) {
-    cout << i << " element > ";
+    cout << i << " > ";
     cin >> arr[i];
     }
     int fr = 0;
