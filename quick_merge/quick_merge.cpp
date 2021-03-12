@@ -21,9 +21,8 @@ void merge(int *arr, int fr, int ls) {
 
 void sort(int *arr, int fr, int ls) {
     if (fr < ls) {
-        sort(arr, fr, (fr + ls) / 2);
-        sort(arr, (fr + ls) / 2 + 1, ls);
-        merge(arr, fr, ls);
+        merge(arr, fr, (fr + ls) / 2);
+        merge(arr, (fr + ls) / 2 + 1, ls);
     }
 }
 
