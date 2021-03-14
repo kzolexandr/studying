@@ -7,15 +7,16 @@ struct Element {
 };
 
 void reversed(int *arr, int length) {
-    int *_arr = new int[length];
-    for (int k = 0; k < length; k++) _arr[k] = arr[k];
+    int *temp = new int[length];
+    for (int k = 0; k < length; k++) {
+        temp[k] = arr[k];
+    }
     for (int m = 0; m < length; m++) {
-        arr[m] = _arr[(length - 1) - m];
+        arr[m] = temp[(length - 1) - m];
     }
 }
 
-void menu()
-{
+void menu() {
     system("cls");
     cout << "Choose variant\n" << endl;
     cout << "1. Insert length\n"
@@ -26,21 +27,14 @@ void menu()
     cout << ">>> ";
 }
 
-int getVariant () {
-    int variant;
-    cin >> variant;
-    return variant;
-}
-
-int main()
-{
+int main() {
     int length;
-    int variant;
+    int var;
     int *arr = new int [length];
     do {
-            menu();
-            variant = getVariant();
-    switch (variant) {
+        menu();
+        cin >> var;
+    switch (var) {
         case 1:
             cout << "Insert your length..." << endl;
             cin >> length;
@@ -77,8 +71,9 @@ int main()
             cerr << "You pick the wrong item, fool!" << endl;
             exit(EXIT_FAILURE);
     }
-    if (variant != 6)
+    if (var <= 5) {
         system ("pause");
-      }  while (variant != 6);
+    }
+    }  while (var <= 5);
     return 0;
 }
