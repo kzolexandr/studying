@@ -2,117 +2,120 @@
 using namespace std;
 
 struct Node {
-    int info;
-    Node *l, *r;
+    int data;
+    Node *left;
+    Node *right;
 };
 
 Node *tree = NULL;
 
-void push(int a, Node **t) {
-    if ((*t) == NULL) {
-        (*t) = new Node;
-        (*t)->info = a;
-        (*t)->l = (*t)->r = NULL;
+void pushIntoTree(int value, Node **ptr) {
+    if (*ptr == NULL) {
+        (*ptr) = new Node;
+        (*ptr)->data = value;
+        (*ptr)->left = (*ptr)->right = NULL;
         return;
     }
-        if (a > (*t)->info) {
-            push(a, &(*t)->r);
+        if (value > (*ptr)->data) {
+            pushIntoTree(value, &(*ptr)->right);
         }
         else {
-            push(a, &(*t)->l);
+            pushIntoTree(value, &(*ptr)->left);
         }
 }
 
-void print(Node *t, int u) {
-    if (t == NULL) {
+void printTree(Node *ptr, int j) {
+    if (ptr == NULL) {
         return;
     }
     else {
-        print(t->l, ++u);
-        for (int i = 0; i < u; ++i) cout << " ";
-        cout << t->info << endl;
-        u--;
+        printTree(ptr->left, ++j);
+        for (int i = 0; i < j; ++i) {
+            cout << " ";
+        }
+        cout << ptr->data << endl;
+        j--;
     }
-    print(t->r, ++u);
+    printTree(ptr->right, ++j);
 }
 
-void shell(int n, int *arr) {
-    int d = n/2;
-    while (d > 0) {
-        for (int i = 0; i < n - d; i++) {
+void sortShell(int length, int *arr) {
+    int middle = length/2;
+    while (middle > 0) {
+        for (int i = 0; i < length - middle; i++) {
             int j = i;
-            while (j >= 0 && arr[j] > arr[j + d]) {
+            while (j >= 0 && arr[j] > arr[j + middle]) {
                 int temp = arr[j];
-                arr[j] = arr[j + d];
-                arr[j + d] = temp;
+                arr[j] = arr[j + middle];
+                arr[j + middle] = temp;
                 j--;
             }
         }
-        d = d/2;
+        middle = middle/2;
     }
 }
 
-int deleted(int n, int *arr) {
-    for (int c = 0; c < n; c++) {
-        for (int l = c + 1; l < n; l++) {
+int deleteFromArray(int length, int *arr) {
+    for (int c = 0; c < length; c++) {
+        for (int l = c + 1; l < length; l++) {
             if ( arr[c] == arr[l] ) {
-                for (int s = l; s < n -1; s++) {
+                for (int s = l; s < length -1; s++) {
                     arr[s] = arr[s + 1];
                 }
-                n = n - 1;
+                length = length - 1;
                 if (arr[c] == arr[l]) {
                     l--;
                 }
             }
         }
     }
-    return n;
+    return length;
 }
 
-void divide(int n, int *arr) {
-    int mid = n/2;
-    int arr2[n];
-    arr2[0] = arr[mid];
-    push (arr2[0], &tree);
-    if (n % 2 == 0) {
-       for (int i = 1; i < n / 1.95; i++) {
-            arr2[i] = arr[mid - i];
-            push(arr2[i], &tree);
-            if (i < n/2) {
-            arr2[i + 1] = arr[mid + i];
-            push (arr2[i + 1], &tree);
+void defineSubtree(int length, int *arr) {
+    int middle = length/2;
+    int shift[length];
+    shift[0] = arr[middle];
+    pushIntoTree(shift[0], &tree);
+    if (length % 2 == 0) {
+       for (int i = 1; i < length / 2; i++) {
+            shift[i] = arr[middle - i];
+            pushIntoTree(shift[i], &tree);
+            if (i < length / 2) {
+            shift[i + 1] = arr[middle + i];
+            pushIntoTree(shift[i + 1], &tree);
             }
        }
     }
     else {
-       for (int i = 1; i < n / 1.95; i++) {
-            arr2[i] = arr[mid - i];
-            push(arr2[i], &tree);
-            arr2[i + 1] = arr[mid + i];
-            push (arr2[i + 1], &tree);
+       for (int i = 1; i < length / 1.95; i++) {
+            shift[i] = arr[middle - i];
+            pushIntoTree(shift[i], &tree);
+            shift[i + 1] = arr[middle + i];
+            pushIntoTree(shift[i + 1], &tree);
        }
     }
 }
 int main() {
-    int n;
-    int s;
+    int length;
+    int value;
     cout << "Insert count of values: ";
-    cin >> n;
+    cin >> length;
     cout << "\n";
-    int arr[n];
-    for (int i = 0; i < n; i++) {
+    int arr[length];
+    for (int i = 0; i < length; i++) {
         cout << "Insert value: ";
-        cin >> s;
-        arr[i] = s;
+        cin >> value;
+        arr[i] = value;
     }
-    shell(n, arr);
-    n = deleted(n, arr);
+    sortShell(length, arr);
+    length = deleteFromArray(length, arr);
     cout << "\nSorted array: ";
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < length; i++) {
         cout << arr[i] << " ";
     }
-    cout <<"\n" << "\nArray length: " << n << "\n";
-    divide(n, arr);
+    cout <<"\n" << "\nArray length: " << length << "\n";
+    defineSubtree(length, arr);
     cout << "\nYour tree: \n \n";
-    print(tree, 0);
+    printTree(tree, 0);
 }
